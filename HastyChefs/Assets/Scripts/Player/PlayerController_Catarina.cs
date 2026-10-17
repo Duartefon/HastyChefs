@@ -1,4 +1,3 @@
-using System;
 using PurrNet;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -18,10 +17,10 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private float maxLookAngle = 80f;
 
     [Header("Input Actions")]
-    [SerializeField] private InputActionReference moveAction;   // Vector2
-    [SerializeField] private InputActionReference lookAction;   // Vector2 (Mouse/Delta)
-    [SerializeField] private InputActionReference jumpAction;   // Button
-    [SerializeField] private InputActionReference sprintAction; // Button
+    [SerializeField] private InputActionReference moveAction;
+    [SerializeField] private InputActionReference lookAction;
+    [SerializeField] private InputActionReference jumpAction;
+    [SerializeField] private InputActionReference sprintAction;
 
     [Header("References")]
     [SerializeField] private Camera playerCamera;
@@ -30,25 +29,47 @@ public class PlayerController : NetworkBehaviour
     private Vector3 velocity;
     private float verticalRotation = 0f;
 
+    private void Awake()
+    {
+        characterController = GetComponent<CharacterController>();
+        enabled = false; // Update stays off until we know we're the owner
+    }
+
     protected override void OnSpawned()
     {
         base.OnSpawned();
-        enabled = isOwner;
 
         if (!isOwner)
-            Destroy(playerCamera.gameObject);
-    }
+        {
+            // Remote copy: no input, no camera, no local physics.
+            if (playerCamera != null) Destroy(playerCamera.gameObject);
+            characterController.enabled = false; // don't fight the NetworkTransform
+            return;
+        }
 
-    private void OnEnable()
-    {
+        if (playerCamera == null)
+        {
+            Debug.LogError("PlayerController: playerCamera is not assigned.", this);
+            return;
+        }
+
         moveAction.action.Enable();
         lookAction.action.Enable();
         jumpAction.action.Enable();
         sprintAction.action.Enable();
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        enabled = true;
     }
 
-    private void OnDisable()
+    protected override void OnDespawned()
     {
+        base.OnDespawned();
+
+        if (!isOwner) return;
+
         moveAction.action.Disable();
         lookAction.action.Disable();
         jumpAction.action.Disable();
@@ -56,19 +77,6 @@ public class PlayerController : NetworkBehaviour
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-    }
-
-    private void Start()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-        characterController = GetComponent<CharacterController>();
-
-        if (playerCamera == null)
-        {
-            enabled = false;
-            return;
-        }
     }
 
     private void Update()
@@ -81,9 +89,7 @@ public class PlayerController : NetworkBehaviour
     {
         bool isGrounded = IsGrounded();
         if (isGrounded && velocity.y < 0)
-        {
             velocity.y = -2f;
-        }
 
         Vector2 moveInput = moveAction.action.ReadValue<Vector2>();
 
@@ -94,9 +100,7 @@ public class PlayerController : NetworkBehaviour
         characterController.Move(moveDirection * currentSpeed * Time.deltaTime);
 
         if (jumpAction.action.WasPressedThisFrame() && isGrounded)
-        {
             velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
-        }
 
         velocity.y += gravity * Time.deltaTime;
         characterController.Move(velocity * Time.deltaTime);
