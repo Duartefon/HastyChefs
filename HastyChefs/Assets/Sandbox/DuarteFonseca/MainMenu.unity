@@ -5256,7 +5256,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1328839499}
-  m_Father: {fileID: 1125048243}
+  m_Father: {fileID: 1925929220}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -6247,7 +6247,6 @@ GameObject:
   - component: {fileID: 757043049}
   - component: {fileID: 757043048}
   - component: {fileID: 757043047}
-  - component: {fileID: 757043051}
   m_Layer: 5
   m_Name: MainMenu
   m_TagString: Untagged
@@ -6340,18 +6339,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!225 &757043051
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 757043046}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!1 &765991694
 GameObject:
   m_ObjectHideFlags: 0
@@ -7564,7 +7551,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3499836957147699261}
-  m_Father: {fileID: 1125048243}
+  m_Father: {fileID: 1925929220}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -7898,7 +7885,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1125048240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7975,9 +7962,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1085321213}
-  - {fileID: 1241297420}
-  - {fileID: 571407139}
+  - {fileID: 1925929220}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -8002,6 +7987,7 @@ MonoBehaviour:
   - {fileID: 1373229730}
   backButton: {fileID: 571407140}
   mainMenu: {fileID: 1298614898}
+  optionMenu: {fileID: 1925929223}
 --- !u!1 &1125644533
 GameObject:
   m_ObjectHideFlags: 0
@@ -9021,7 +9007,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1298614901}
         m_TargetAssemblyTypeName: TweenEffectSequence, Assembly-CSharp
-        m_MethodName: PlaySequence
+        m_MethodName: Show
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9095,7 +9081,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1241297419}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9103,7 +9089,7 @@ RectTransform:
   - {fileID: 1033698663553228983}
   - {fileID: 1373229731}
   - {fileID: 41687020}
-  m_Father: {fileID: 1125048243}
+  m_Father: {fileID: 1925929220}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -9995,6 +9981,7 @@ GameObject:
   - component: {fileID: 1298614899}
   - component: {fileID: 1298614900}
   - component: {fileID: 1298614901}
+  - component: {fileID: 1298614902}
   m_Layer: 5
   m_Name: MenuPanel
   m_TagString: Untagged
@@ -10043,10 +10030,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d20942faa6bbc77fba975ab76dc541e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TweenEffectSequence
-  effectPresets:
-  - {fileID: 11400000, guid: 434d87342bb1ad4a2b615afbe4671172, type: 2}
+  openPresets:
   - {fileID: 11400000, guid: eca05c2cdaf4f45949abed9093389d26, type: 2}
+  - {fileID: 11400000, guid: 434d87342bb1ad4a2b615afbe4671172, type: 2}
+  closePresets: []
+  defaultFadeDuration: 0.2
   useUnscaledTime: 1
+  canvasGroup: {fileID: 1298614902}
+--- !u!225 &1298614902
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1298614898}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1314163276
 GameObject:
   m_ObjectHideFlags: 0
@@ -13438,7 +13440,7 @@ MonoBehaviour:
   mainMenuOption: {fileID: 1298614898}
   singleplayerMenu: {fileID: 3708832845880761047}
   multiplayerMenu: {fileID: 1459531325}
-  optionMenu: {fileID: 1125048239}
+  optionMenu: {fileID: 1925929219}
   singleplayerMenuButton: {fileID: 95524421}
   multiplayerMenuButton: {fileID: 1278895802}
   optionMenuButton: {fileID: 1772190514}
@@ -13990,6 +13992,87 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1922048390}
   m_CullTransparentMesh: 1
+--- !u!1 &1925929219
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1925929220}
+  - component: {fileID: 1925929222}
+  - component: {fileID: 1925929223}
+  - component: {fileID: 1925929224}
+  m_Layer: 5
+  m_Name: TweenPanel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1925929220
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1925929219}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1085321213}
+  - {fileID: 1241297420}
+  - {fileID: 571407139}
+  m_Father: {fileID: 1125048243}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1925929222
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1925929219}
+  m_CullTransparentMesh: 1
+--- !u!114 &1925929223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1925929219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d20942faa6bbc77fba975ab76dc541e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TweenEffectSequence
+  openPresets:
+  - {fileID: 11400000, guid: 2635df7cf1d8ec41f982f34235820186, type: 2}
+  - {fileID: 11400000, guid: 6f667f5f791a338b6ae0138c530343ce, type: 2}
+  closePresets:
+  - {fileID: 11400000, guid: 03ccb6587404b82daabf1ba1e8dd2a1a, type: 2}
+  defaultFadeDuration: 0.2
+  useUnscaledTime: 1
+  canvasGroup: {fileID: 1925929224}
+--- !u!225 &1925929224
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1925929219}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1930158170
 GameObject:
   m_ObjectHideFlags: 0

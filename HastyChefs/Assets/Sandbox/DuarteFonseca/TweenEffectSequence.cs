@@ -1,48 +1,121 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using PrimeTween;
 
-public class TweenEffectSequence : MonoBehaviour
+[RequireComponent(typeof(CanvasGroup))]
+public class TweenEffectSequence : MonoBehaviour, IAnimatedView
 {
-    [Tooltip("Drag as many presets as you want here. They will merge into one sequence.")]
-    [SerializeField] private List<TweenEffectPreset> effectPresets = new List<TweenEffectPreset>();
+    [Header("Presets")]
+    [Tooltip("Presets played when the view opens.")]
+    [SerializeField] private List<TweenEffectPreset> openPresets = new List<TweenEffectPreset>();
 
+    [Tooltip("Presets played when the view closes (optional - can rely on fallback fade).")]
+    [SerializeField] private List<TweenEffectPreset> closePresets = new List<TweenEffectPreset>();
+
+    [Header("Fallback Settings")]
+    [Tooltip("Duration of the fallback alpha fade if no closePresets are specified.")]
+    [SerializeField] private float defaultFadeDuration = 0.2f;
     [SerializeField] private bool useUnscaledTime = true;
 
+    [SerializeField] private CanvasGroup canvasGroup;
     private Sequence activeSequence;
 
-    private void OnEnable()
+    public bool IsOpen { get; private set; }
+
+
+
+    //se isto funcionar passar para um TweenEffectSequenceUI
+    private void Start()
     {
-        PlaySequence();
+        Show();
     }
-
-    public void PlaySequence()
+    /// <summary>
+    /// Opens the menu, restores interactivity, and runs opening animations.
+    /// </summary>
+    public void Show()
     {
-        if (effectPresets == null || effectPresets.Count == 0) return;
+        
+        IsOpen = true;
 
-        // Cancel previous animation to prevent overlap conflicts
+        gameObject.SetActive(true); // to delete after testing 
+
         activeSequence.Stop();
 
-        // 1. First pass: Apply all initial start values immediately so there are no frame pops
-        foreach (var preset in effectPresets)
+        // Re-enable clicks and input //turn into a fuction
+        canvasGroup.blocksRaycasts = true;
+        canvasGroup.interactable = true;
+
+        
+        PlaySequence(openPresets, onComplete: null);
+    }
+
+    /// <summary>
+    /// Disables input immediately, fades out/animates close, then deactivates GameObject.
+    /// </summary>
+    public void Hide()
+    {
+        Debug.Log("O gameobject é: " + gameObject.name);
+        if (!gameObject.activeInHierarchy || !IsOpen) //too delete
+        {
+            IsOpen = false;
+            return;
+        }
+
+        IsOpen = false;
+
+        // 1. Instantly block UI clicks so the player can't spam buttons while it closes //function with bool value
+        canvasGroup.blocksRaycasts = false;
+        canvasGroup.interactable = false;
+
+        activeSequence.Stop();
+
+        // 2. If you defined custom close presets, play them // probably to delete too, test with no effects given in the inspector
+        if (closePresets != null && closePresets.Count > 0)
+        {
+            PlaySequence(closePresets, onComplete: () => gameObject.SetActive(false));
+        }
+        else
+        {
+            // 3. Fallback: Quick, clean CanvasGroup alpha fade to 0
+            activeSequence = Sequence.Create(useUnscaledTime: useUnscaledTime)
+                .Group(Tween.Alpha(canvasGroup, endValue: 0f, duration: defaultFadeDuration, ease: Ease.InQuad, useUnscaledTime: useUnscaledTime))
+                .ChainCallback(() => gameObject.SetActive(false));
+        }
+    }
+
+    private void PlaySequence(List<TweenEffectPreset> presets, Action onComplete)
+    {
+        if (presets == null || presets.Count == 0)
+        {
+            onComplete?.Invoke();
+            return;
+        }
+
+        // Apply initial frame values so elements don't pop
+        foreach (var preset in presets)
         {
             if (preset == null) continue;
             ApplyInitialState(preset);
         }
 
-        // 2. Second pass: Build the multi-track timeline
         activeSequence = Sequence.Create(useUnscaledTime: useUnscaledTime);
 
-        foreach (var preset in effectPresets)
+        // Build track
+        foreach (var preset in presets)
         {
             if (preset == null) continue;
 
             Tween tween = preset.CreateTween(gameObject, useUnscaledTime);
             if (tween.isAlive)
             {
-                // Inserts the tween at its designated start timestamp on the timeline
                 activeSequence.Insert(preset.startTime, tween);
             }
+        }
+
+        if (onComplete != null)
+        {
+            activeSequence.ChainCallback(onComplete);
         }
     }
 
@@ -50,13 +123,12 @@ public class TweenEffectSequence : MonoBehaviour
     {
         switch (preset.effectType)
         {
-            case TweenEffectType.ScaleUniform:
-                transform.localScale = Vector3.one * preset.startValue;
+            case TweenEffectType.FadeAlpha:
+                canvasGroup.alpha = preset.startValue;
                 break;
 
-            case TweenEffectType.FadeAlpha:
-                if (TryGetComponent<CanvasGroup>(out var canvasGroup))
-                    canvasGroup.alpha = preset.startValue;
+            case TweenEffectType.ScaleUniform:
+                transform.localScale = Vector3.one * preset.startValue;
                 break;
 
             case TweenEffectType.UIAnchoredPositionX:
@@ -73,6 +145,7 @@ public class TweenEffectSequence : MonoBehaviour
 
     private void OnDisable()
     {
+        // Safety cleanup if turned off externally
         activeSequence.Stop();
     }
 }

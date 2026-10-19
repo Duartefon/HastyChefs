@@ -7,7 +7,18 @@ public enum TweenEffectType
     FadeAlpha,
     UIAnchoredPositionX,
     UIAnchoredPositionY,
-    PunchScale
+    UIRotationZ,        // Standard 2D UI tilt/spin (float)
+    
+    PunchScale,
+
+    // Transform Operations
+    Position,
+    LocalPosition,
+    RotationEuler,      // 3D rotation (Vector3)
+
+
+ 
+    PunchRotation       // Great for UI button wobbles
 }
 
 [CreateAssetMenu(fileName = "NewTweenEffect", menuName = "UI/Tween Effect Preset")]

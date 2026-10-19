@@ -13,7 +13,7 @@ public class MenuManager : MonoBehaviour
 
     [SerializeField] private Button  singleplayerMenuButton, multiplayerMenuButton, optionMenuButton, quitButton;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
- 
+
 
     void Start()
     {
@@ -42,8 +42,10 @@ public class MenuManager : MonoBehaviour
 
         optionMenuButton.onClick.AddListener(() =>
         {
-            optionMenu.SetActive(true); mainMenuOption.SetActive(false);  
-            Tween.Scale(optionMenu.transform, startValue: 0, endValue: 2f, duration: 0.5f, ease: Ease.InOutElastic, startDelay: 1f);
+            
+            optionMenu.GetComponent<IAnimatedView>().Show();
+            mainMenuOption.GetComponent<IAnimatedView>().Hide();
+            
         });
         
         quitButton.onClick.AddListener(Application.Quit);
