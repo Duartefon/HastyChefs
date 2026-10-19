@@ -66,6 +66,7 @@ public class VideoMenuManager : MonoBehaviour
         {
             if (isOn) OnAspectRatioChanged(AspectRatio.TWENTY_ONE_BY_TEN);
         });
+
     }
 
     private void InitializeResolutionList()

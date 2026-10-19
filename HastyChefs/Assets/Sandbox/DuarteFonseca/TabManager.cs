@@ -1,12 +1,24 @@
+using System;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class TabManager : MonoBehaviour
 {
     [SerializeField] public GameObject[] tabs;
-    public void onTabSwitch(GameObject tab)
+    [SerializeField] private Button backButton;
+    [SerializeField] private GameObject mainMenu;
+
+    public void Start()
+    {
+        backButton.onClick.AddListener( () => { gameObject.SetActive(false); mainMenu.SetActive(true); });
+    }
+    
+
+    public void OnTabSwitch(GameObject tab)
     {
         tab.SetActive(true);
 
@@ -18,5 +30,7 @@ public class TabManager : MonoBehaviour
             }
         }
     }
+    
+    
 
 }
