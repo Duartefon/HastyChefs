@@ -140,6 +140,13 @@ public class TweenEffectSequence : MonoBehaviour, IAnimatedView
                 if (TryGetComponent<RectTransform>(out var rectTransformY))
                     rectTransformY.anchoredPosition = new Vector2(rectTransformY.anchoredPosition.x, preset.startValue);
                 break;
+            case TweenEffectType.UIRotationZ:
+                transform.localEulerAngles = new Vector3(0f, 0f, preset.startValue);
+                break;
+
+            case TweenEffectType.RotationEuler:
+                transform.localEulerAngles = preset.startVector3;
+                break;
         }
     }
 

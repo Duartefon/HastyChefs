@@ -10031,8 +10031,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TweenEffectSequence
   openPresets:
-  - {fileID: 11400000, guid: eca05c2cdaf4f45949abed9093389d26, type: 2}
+  - {fileID: 11400000, guid: 6f667f5f791a338b6ae0138c530343ce, type: 2}
   - {fileID: 11400000, guid: 434d87342bb1ad4a2b615afbe4671172, type: 2}
+  - {fileID: 11400000, guid: da655fbb0b0fd21fe9995a979e125391, type: 2}
+  - {fileID: 11400000, guid: bfdae9e629e434f75a7e98e49cb197b5, type: 2}
+  - {fileID: 11400000, guid: ea2b7493151bac9c9847d31b6956996d, type: 2}
   closePresets: []
   defaultFadeDuration: 0.2
   useUnscaledTime: 1
@@ -14130,7 +14133,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: fb29f5d677ce94fa9b9a8a196e48ce84, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 25b02021ec32cf52e8586a4d52c4718b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

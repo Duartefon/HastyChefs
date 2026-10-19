@@ -35,7 +35,8 @@ public class TweenEffectPreset : ScriptableObject
     public float startValue = 0f;
     public float endValue = 1f;
     public Vector3 punchStrength = new Vector3(0.1f, 0.1f, 0f);
-
+    public Vector3 startVector3 = new Vector3(0f, 0f, 0f);
+    public Vector3 endVector3 = new Vector3(0f, 0f, 0f);
     [Header("Timing & Curve")]
     [Range(0.01f, 5f)] public float duration = 0.35f;
     public Ease ease = Ease.OutBack;
@@ -105,6 +106,38 @@ public class TweenEffectPreset : ScriptableObject
                     strength: punchStrength, 
                     duration: duration, 
                     frequency: 10, 
+                    useUnscaledTime: useUnscaledTime);
+            
+            
+            case TweenEffectType.UIRotationZ:
+                // Applies 2D angle tilt around Z
+                target.transform.localEulerAngles = new Vector3(0f, 0f, startValue);
+                return Tween.EulerAngles(
+                    target.transform,
+                    startValue: new Vector3(0f, 0f, startValue),
+                    endValue: new Vector3(0f, 0f, endValue),
+                    duration: duration,
+                    ease: ease,
+                    useUnscaledTime: useUnscaledTime);
+
+            case TweenEffectType.RotationEuler:
+                // 3D flip or full rotation using startVector3 / endVector3
+                target.transform.localEulerAngles = startVector3;
+                return Tween.EulerAngles(
+                    target.transform,
+                    startValue: startVector3,
+                    endValue: endVector3,
+                    duration: duration,
+                    ease: ease,
+                    useUnscaledTime: useUnscaledTime);
+
+            case TweenEffectType.PunchRotation:
+                // Punch wobble (e.g. punchStrength = (0, 0, 15f) for a quick UI rattle)
+                return Tween.PunchLocalRotation(
+                    target.transform,
+                    strength: punchStrength,
+                    duration: duration,
+                    frequency: 10,
                     useUnscaledTime: useUnscaledTime);
         }
 
