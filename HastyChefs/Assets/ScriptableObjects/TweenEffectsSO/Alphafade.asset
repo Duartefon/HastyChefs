@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67f6e00dde5d0c2389e274bd6c242b8d, type: 3}
-  m_Name: ScaleOptionMenu
+  m_Name: Alphafade
   m_EditorClassIdentifier: Assembly-CSharp::TweenEffectPreset
-  startTime: 0.5
-  effectType: 0
+  startTime: 0
+  effectType: 1
   startValue: 0
   endValue: 1
-  punchStrength: {x: 0.1, y: 0.1, z: 0.1}
+  punchStrength: {x: 0, y: 0, z: 0}
   startVector3: {x: 0, y: 0, z: 0}
   endVector3: {x: 0, y: 0, z: 0}
-  duration: 0.6
-  ease: 15
-  resetBeforeStartPosition: 1
+  duration: 0.51
+  ease: 27
+  resetBeforeStartPosition: 0
