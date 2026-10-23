@@ -1,9 +1,4 @@
-using System;
-using PrimeTween;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.UIElements;
 using Button = UnityEngine.UI.Button;
 
 public class MenuManager : MonoBehaviour
@@ -18,8 +13,8 @@ public class MenuManager : MonoBehaviour
     void Start()
     {
       
-   
-         
+    Screen.SetResolution(1920,1080, true);
+    
 #if UNITY_EDITOR
         if (!mainMenuOption || !multiplayerMenu || !singleplayerMenu || !optionMenu )
            Debug.LogWarning($"One of the references is missing! " +
