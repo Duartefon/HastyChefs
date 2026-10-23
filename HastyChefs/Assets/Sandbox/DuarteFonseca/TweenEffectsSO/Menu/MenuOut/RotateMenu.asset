@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67f6e00dde5d0c2389e274bd6c242b8d, type: 3}
   m_Name: RotateMenu
   m_EditorClassIdentifier: Assembly-CSharp::TweenEffectPreset
-  startTime: 0.6
+  startTime: 0.76
   effectType: 8
   startValue: 0
   endValue: 0
   punchStrength: {x: 0, y: 0, z: 0}
   startVector3: {x: 0, y: 0, z: 0}
-  endVector3: {x: 0, y: 0, z: 30}
-  duration: 0.45
-  ease: 31
+  endVector3: {x: 0, y: 180, z: 0}
+  duration: 0.01
+  ease: 19
+  resetBeforeStartPosition: 1

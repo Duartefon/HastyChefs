@@ -19,5 +19,6 @@ MonoBehaviour:
   punchStrength: {x: 0, y: 0, z: 0}
   startVector3: {x: 0, y: 0, z: 30}
   endVector3: {x: 0, y: 0, z: 0}
-  duration: 0.3
+  duration: 0.05
   ease: 30
+  resetBeforeStartPosition: 0

@@ -41,6 +41,9 @@ public class TweenEffectPreset : ScriptableObject
     [Range(0.01f, 5f)] public float duration = 0.35f;
     public Ease ease = Ease.OutBack;
 
+    [Header("Reset before start position")]
+    public bool resetBeforeStartPosition = true;
+
     /// <summary>
     /// Configures initial visual state and generates the Tween without auto-playing.
     /// </summary>
@@ -49,7 +52,6 @@ public class TweenEffectPreset : ScriptableObject
         switch (effectType)
         {
             case TweenEffectType.ScaleUniform:
-                target.transform.localScale = Vector3.one * startValue;
                 return Tween.Scale(
                     target.transform, 
                     startValue: startValue, 
@@ -75,7 +77,6 @@ public class TweenEffectPreset : ScriptableObject
             case TweenEffectType.UIAnchoredPositionX:
                 if (target.TryGetComponent<RectTransform>(out var rectTransformX))
                 {
-                    rectTransformX.anchoredPosition = new Vector2(startValue, rectTransformX.anchoredPosition.y);
                     return Tween.UIAnchoredPositionX(
                         rectTransformX, 
                         startValue: startValue, 
@@ -111,7 +112,7 @@ public class TweenEffectPreset : ScriptableObject
             
             case TweenEffectType.UIRotationZ:
                 // Applies 2D angle tilt around Z
-                target.transform.localEulerAngles = new Vector3(0f, 0f, startValue);
+              if(resetBeforeStartPosition)  target.transform.localEulerAngles = new Vector3(0f, 0f, startValue);
                 return Tween.EulerAngles(
                     target.transform,
                     startValue: new Vector3(0f, 0f, startValue),
@@ -122,7 +123,7 @@ public class TweenEffectPreset : ScriptableObject
 
             case TweenEffectType.RotationEuler:
                 // 3D flip or full rotation using startVector3 / endVector3
-                target.transform.localEulerAngles = startVector3;
+                if(resetBeforeStartPosition) target.transform.localEulerAngles = startVector3;
                 return Tween.EulerAngles(
                     target.transform,
                     startValue: startVector3,

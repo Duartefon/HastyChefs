@@ -79,38 +79,29 @@ public class TweenEffectSequence : MonoBehaviour, IAnimatedView
         {
             // 3. Fallback: Quick, clean CanvasGroup alpha fade to 0
             activeSequence = Sequence.Create(useUnscaledTime: useUnscaledTime)
-                .Group(Tween.Alpha(canvasGroup, endValue: 0f, duration: defaultFadeDuration, ease: Ease.InQuad, useUnscaledTime: useUnscaledTime))
-                .ChainCallback(() => gameObject.SetActive(false));
+                .Group(Tween.Alpha(canvasGroup, endValue: 0f, duration: defaultFadeDuration, ease: Ease.InQuad,
+                    useUnscaledTime: useUnscaledTime))
+           .ChainCallback(() => gameObject.SetActive(false));
         }
     }
 
     private void PlaySequence(List<TweenEffectPreset> presets, Action onComplete)
     {
-        if (presets == null || presets.Count == 0)
-        {
-            onComplete?.Invoke();
-            return;
-        }
-
-        // Apply initial frame values so elements don't pop
-        foreach (var preset in presets)
-        {
-            if (preset == null) continue;
-            ApplyInitialState(preset);
-        }
 
         activeSequence = Sequence.Create(useUnscaledTime: useUnscaledTime);
 
         // Build track
         foreach (var preset in presets)
         {
-            if (preset == null) continue;
-
+           // ApplyInitialState(preset);
             Tween tween = preset.CreateTween(gameObject, useUnscaledTime);
             if (tween.isAlive)
             {
                 activeSequence.Insert(preset.startTime, tween);
+                Debug.Log("ActiveSequnece" + activeSequence + "Tween inserted at: " + preset.startTime);
+                
             }
+            
         }
 
         if (onComplete != null)
