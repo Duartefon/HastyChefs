@@ -18,10 +18,11 @@ namespace PurrNet.Lobby.Steam
     /// </summary>
     [ProviderDependency("com.rlabrecque.steamworks.net", "Steamworks.NET")]
     [CreateAssetMenu(menuName = "PurrLobby/Steam/Lobby Provider", fileName = "Steam Lobby Provider", order = -203)]
-    public class SteamLobbyProvider : LobbyProvider
+    public class SteamLobbyProvider : LobbyProvider, IFriendInviteProvider
     {
         [Tooltip("Default max players for newly created lobbies.")]
         [SerializeField] private int _maxPlayers = 4;
+        private readonly Dictionary<ulong, Texture2D> _avatarCache = new();
 
         public override int maxPlayer => _maxPlayers;
 
@@ -267,6 +268,77 @@ namespace PurrNet.Lobby.Steam
             }
         }
 
+        public bool InviteFriend(string lobbyId, string friendId)
+        {
+            if (!SteamRuntime.EnsureInitialized() ||
+                !ulong.TryParse(lobbyId, out var lobby) ||
+                !ulong.TryParse(friendId, out var friend))
+                return false;
+
+            return SteamMatchmaking.InviteUserToLobby(new CSteamID(lobby), new CSteamID(friend));
+        }
+
+        public List<FriendInfo> GetFriends(bool onlineOnly)
+        {
+            var result = new List<FriendInfo>();
+            if (!SteamRuntime.EnsureInitialized())
+                return result;
+
+            var myAppId = SteamUtils.GetAppID();
+            int count = SteamFriends.GetFriendCount(EFriendFlags.k_EFriendFlagImmediate);
+
+            for (int i = 0; i < count; i++)
+            {
+                var id = SteamFriends.GetFriendByIndex(i, EFriendFlags.k_EFriendFlagImmediate);
+                bool online = SteamFriends.GetFriendPersonaState(id) != EPersonaState.k_EPersonaStateOffline;
+                if (onlineOnly && !online)
+                    continue;
+
+                bool inGame = SteamFriends.GetFriendGamePlayed(id, out var game);
+                result.Add(new FriendInfo
+                {
+                    id = id.m_SteamID.ToString(),
+                    name = SteamFriends.GetFriendPersonaName(id),
+                    online = online,
+                    inThisGame = inGame && game.m_gameID.AppID() == myAppId
+                });
+            }
+
+            return result;
+        }
+
+        public Texture2D GetAvatar(string friendId)
+        {
+            if (!SteamRuntime.EnsureInitialized() || !ulong.TryParse(friendId, out var raw))
+                return null;
+
+            if (_avatarCache.TryGetValue(raw, out var cached) && cached)
+                return cached;
+
+            // 0 = no avatar set, -1 = Steam is still downloading it.
+            // Returning null just means the caller tries again on its next refresh.
+            int img = SteamFriends.GetMediumFriendAvatar(new CSteamID(raw));
+            if (img <= 0 || !SteamUtils.GetImageSize(img, out uint w, out uint h))
+                return null;
+
+            var buffer = new byte[w * h * 4];
+            if (!SteamUtils.GetImageRGBA(img, buffer, buffer.Length))
+                return null;
+
+            // Steam images are top-down, Unity textures are bottom-up, so flip the rows.
+            int stride = (int)w * 4;
+            var flipped = new byte[buffer.Length];
+            for (int y = 0; y < h; y++)
+                Buffer.BlockCopy(buffer, y * stride, flipped, (int)(h - 1 - y) * stride, stride);
+
+            var tex = new Texture2D((int)w, (int)h, TextureFormat.RGBA32, false);
+            tex.LoadRawTextureData(flipped);
+            tex.Apply();
+
+            _avatarCache[raw] = tex;
+            return tex;
+        }
+
         private const string SteamUnavailable =
             "Steam is not running or SteamAPI failed to initialize.";
 #else
@@ -293,6 +365,12 @@ namespace PurrNet.Lobby.Steam
 
         public override Task<LobbyCollectionResponse> QueryLobbies(LobbyQuery query = null) =>
             Task.FromResult(LobbyCollectionResponse.Failure(SteamUnavailable));
+
+        public bool InviteFriend(string lobbyId, string friendId) => false;
+        public System.Collections.Generic.List<FriendInfo> GetFriends(bool onlineOnly) =>
+            new System.Collections.Generic.List<FriendInfo>();
+
+        public Texture2D GetAvatar(string friendId) => null;
 #endif
     }
 }

@@ -52,6 +52,10 @@ namespace PurrNet.Lobby
         [Space]
         [SerializeField] private bool _connectToPurrnetInLobby = true;
         [SerializeField] private LobbyConnectionProvider _lobbyConnection;
+        [SerializeField] private LobbyFriendEntry _friendEntryPrefab;
+        [SerializeField] private Transform _friendsContent;
+        [SerializeField] private bool _friendsOnlineOnly = true;
+        [SerializeField] private float _friendsRefreshInterval = 3f;
 
         private ILobby _lobby;
         private bool _lobbyConnected;
@@ -61,6 +65,9 @@ namespace PurrNet.Lobby
         private bool _gameStarted;
         private bool _closingLobby;
         private string _localPlayerId;
+        private IFriendInviteProvider _friendProvider;
+        private float _nextFriendsRefresh;
+        private readonly Dictionary<string, LobbyFriendEntry> _friendEntries = new();
 
         private UIPool<Transform> _playerPlaceholderPool;
 
@@ -86,6 +93,9 @@ namespace PurrNet.Lobby
             _wasAllReady = false;
             _closingLobby = false;
             _localPlayerId = lobby?.localPlayer?.id;
+            _friendProvider = orchestrator.lobbyProvider as IFriendInviteProvider;
+            _nextFriendsRefresh = 0f;
+            ClearFriendEntries();
             ResetStatusLabels();
 
             _playerPlaceholderPool ??= new UIPool<Transform>(_playerPlaceholderPrefab.transform, _playerContent);
@@ -164,6 +174,8 @@ namespace PurrNet.Lobby
 
         private void Update()
         {
+            RefreshFriends();
+
             if (_lobby?.localPlayer == null || !_lobby.localPlayer.isOwner)
                 return;
 
@@ -221,6 +233,69 @@ namespace PurrNet.Lobby
                 _lobby.lobbyData.SetData(LOBBY_STATUS_STRING, _lobbyStatus.text);
                 _lobby.lobbyData.SetData(LOBBY_STATUS_DETAILS_STRING, _lobbyStatusDetails.text);
             }
+        }
+
+        private void RefreshFriends()
+        {
+            if (_friendProvider == null || _lobby == null || _closingLobby || !_friendsContent)
+                return;
+
+            if (Time.unscaledTime < _nextFriendsRefresh)
+                return;
+
+            _nextFriendsRefresh = Time.unscaledTime + _friendsRefreshInterval;
+
+            var inLobby = new HashSet<string>();
+            foreach (var p in _lobby.players)
+                inLobby.Add(p.id);
+
+            var seen = new HashSet<string>();
+
+            foreach (var friend in _friendProvider.GetFriends(_friendsOnlineOnly))
+            {
+                if (inLobby.Contains(friend.id))
+                    continue;
+
+                seen.Add(friend.id);
+
+                if (!_friendEntries.TryGetValue(friend.id, out var entry))
+                {
+                    entry = Instantiate(_friendEntryPrefab, _friendsContent);
+                    entry.Init(friend.id, InviteFriend);
+                    _friendEntries[friend.id] = entry;
+                }
+
+                entry.Refresh(friend.name, friend.inThisGame ? "In game" : friend.online ? "Online" : "Offline");
+                if (!entry.hasAvatar)
+                    entry.SetAvatar(_friendProvider.GetAvatar(friend.id));
+            }
+
+            var toRemove = new List<string>();
+            foreach (var id in _friendEntries.Keys)
+                if (!seen.Contains(id))
+                    toRemove.Add(id);
+
+            foreach (var id in toRemove)
+            {
+                if (_friendEntries[id]) Destroy(_friendEntries[id].gameObject);
+                _friendEntries.Remove(id);
+            }
+        }
+
+        private void InviteFriend(string friendId)
+        {
+            if (_friendProvider == null || _lobby == null)
+                return;
+
+            if (!_friendProvider.InviteFriend(_lobby.id, friendId))
+                Toaster.PushError("Invite failed", "Steam rejected the invite.");
+        }
+
+        private void ClearFriendEntries()
+        {
+            foreach (var entry in _friendEntries.Values)
+                if (entry) Destroy(entry.gameObject);
+            _friendEntries.Clear();
         }
 
         private void StartGame()
@@ -512,6 +587,8 @@ namespace PurrNet.Lobby
 
             if (_lobbyConnected)
                 _lobbyConnection.OnPlayerRegistered(player);
+
+            _nextFriendsRefresh = 0f;
         }
 
         private void OnPlayerLeft(IPlayer player)
@@ -529,6 +606,8 @@ namespace PurrNet.Lobby
 
             if (_lobbyConnected)
                 _lobbyConnection.OnPlayerUnregistered(player);
+
+            _nextFriendsRefresh = 0f;
         }
 
         protected override IEnumerator OnExitTransition()

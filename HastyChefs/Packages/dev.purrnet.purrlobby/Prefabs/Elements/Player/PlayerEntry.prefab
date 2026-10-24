@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5662961796779488911
 RectTransform:
   m_ObjectHideFlags: 0
@@ -160,6 +160,8 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+  m_MaxWidth: -1
+  m_MaxHeight: -1
 --- !u!114 &8532775654736640948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,7 +172,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb72760b3a784ab0a7cb7240f37f860c, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: PurrUI.Runtime::PurrNet.UI.ColoredGraphic
   _graphic: {fileID: 8052722413629916396}
   _transitionDuration: 0.1
@@ -415,6 +417,8 @@ MonoBehaviour:
   m_FlexibleWidth: 1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+  m_MaxWidth: -1
+  m_MaxHeight: -1
 --- !u!114 &998484666454787759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -425,7 +429,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb72760b3a784ab0a7cb7240f37f860c, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: PurrUI.Runtime::PurrNet.UI.ColoredGraphic
   _graphic: {fileID: 3806786949884999305}
   _transitionDuration: 0.1
@@ -462,7 +466,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d83035f59de044fc97ddadad4a295e61, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: PurrUI.Runtime::PurrNet.UI.ThemedGraphicTone
   _graphic: {fileID: 3806786949884999305}
   _slot: 0
@@ -623,6 +627,8 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+  m_MaxWidth: -1
+  m_MaxHeight: -1
 --- !u!114 &5362436243024035419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -633,7 +639,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb72760b3a784ab0a7cb7240f37f860c, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: PurrUI.Runtime::PurrNet.UI.ColoredGraphic
   _graphic: {fileID: 5621913713163626870}
   _transitionDuration: 0.1
@@ -840,6 +846,8 @@ MonoBehaviour:
   m_FlexibleWidth: 1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+  m_MaxWidth: -1
+  m_MaxHeight: -1
 --- !u!114 &4877704170111473340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -923,7 +931,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb72760b3a784ab0a7cb7240f37f860c, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: PurrUI.Runtime::PurrNet.UI.ColoredGraphic
   _graphic: {fileID: 6769961186041862431}
   _transitionDuration: 0.1
@@ -960,7 +968,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d83035f59de044fc97ddadad4a295e61, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: PurrUI.Runtime::PurrNet.UI.ThemedGraphicTone
   _graphic: {fileID: 6769961186041862431}
   _slot: 0
@@ -1032,6 +1040,8 @@ MonoBehaviour:
   m_FlexibleWidth: 1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+  m_MaxWidth: -1
+  m_MaxHeight: -1
 --- !u!1001 &1017916548087063933
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1042,7 +1052,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 144364927656772408, guid: 8e44e060b9566d54faf5cbc7afc93813, type: 3}
       propertyPath: _graphic
-      value:
+      value: 
       objectReference: {fileID: 8418477308867016023}
     - target: {fileID: 5040737113958996952, guid: 8e44e060b9566d54faf5cbc7afc93813, type: 3}
       propertyPath: m_Pivot.x
@@ -1283,7 +1293,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3110532728764462410, guid: 5809fb624f51eea45b9c293ea3ff56ab, type: 3}
       propertyPath: _graphic
-      value:
+      value: 
       objectReference: {fileID: 1652506047856607096}
     - target: {fileID: 3110532728764462410, guid: 5809fb624f51eea45b9c293ea3ff56ab, type: 3}
       propertyPath: _color.color
@@ -1315,7 +1325,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6457719766771539080, guid: 5809fb624f51eea45b9c293ea3ff56ab, type: 3}
       propertyPath: _graphic
-      value:
+      value: 
       objectReference: {fileID: 1792602653652835805}
     - target: {fileID: 6457719766771539080, guid: 5809fb624f51eea45b9c293ea3ff56ab, type: 3}
       propertyPath: _coloredInfos.Array.data[0].color
@@ -1409,7 +1419,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!114 &1792602653652835805 stripped
 MonoBehaviour:
@@ -1420,7 +1430,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9019e8485f71c44cb77ac3cf2487ff1, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: PurrUI.Runtime::PurrNet.UI.RectangleGraphic
 --- !u!224 &2048231805715337554 stripped
 RectTransform:
@@ -1437,7 +1447,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 375555912367545930, guid: cde3956384d4b694a83f0fc7898d2ffd, type: 3}
       propertyPath: _graphic
-      value:
+      value: 
       objectReference: {fileID: 3976862944778025737}
     - target: {fileID: 375555912367545930, guid: cde3956384d4b694a83f0fc7898d2ffd, type: 3}
       propertyPath: _color.color
@@ -1570,7 +1580,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 375555912367545930, guid: cde3956384d4b694a83f0fc7898d2ffd, type: 3}
       propertyPath: _graphic
-      value:
+      value: 
       objectReference: {fileID: 2311842029397836470}
     - target: {fileID: 375555912367545930, guid: cde3956384d4b694a83f0fc7898d2ffd, type: 3}
       propertyPath: _color.color
