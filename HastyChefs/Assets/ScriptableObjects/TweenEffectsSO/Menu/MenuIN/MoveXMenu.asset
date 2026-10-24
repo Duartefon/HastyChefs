@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67f6e00dde5d0c2389e274bd6c242b8d, type: 3}
+  m_Name: MoveXMenu
+  m_EditorClassIdentifier: Assembly-CSharp::TweenEffectPreset
+  startTime: 0.17
+  effectType: 2
+  startValue: -710
+  endValue: 30
+  punchStrength: {x: 0, y: 0, z: 0}
+  startVector3: {x: 0, y: 0, z: 0}
+  endVector3: {x: 0, y: 0, z: 0}
+  duration: 0.25
+  ease: 27
+  resetBeforeStartPosition: 1
