@@ -1,0 +1,5 @@
+{
+    "name": "Player.Core",
+    "rootNamespace": "HastyChefs.Player.Core",
+    "noEngineReferences": true
+}

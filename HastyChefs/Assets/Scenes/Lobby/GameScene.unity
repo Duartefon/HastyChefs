@@ -501,7 +501,7 @@ MonoBehaviour:
   _cookieScope: 1
   _dontDestroyOnLoad: 0
   _transport: {fileID: 1349514671}
-  _networkPrefabs: {fileID: 11400000, guid: 9d77d7e44c12c9a499d121a7e145e0c8, type: 2}
+  _networkPrefabs: {fileID: 11400000, guid: 36558d4a2347e6b4c89e083c7cfc75eb, type: 2}
   _networkAssets: {fileID: 0}
   _networkRules: {fileID: 11400000, guid: d8799083b96579a42b8b2d03e4ceae98, type: 2}
   _visibilityRules: {fileID: 11400000, guid: 8f014a5bd8dc68646a2a3c0b18c5bbd8, type: 2}
@@ -537,7 +537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ced7bf28cdbee104e8cdc34ab761b039, type: 3}
   m_Name: 
   m_EditorClassIdentifier: PurrNet.Runtime::PurrNet.PlayerSpawner
-  _playerPrefab: {fileID: 2857672636500861860, guid: aa4a16c4b3bde314ab0d68103b23cafb, type: 3}
+  _playerPrefab: {fileID: 2857672636500861860, guid: 2cc3bd033e35ba04794c287920a279aa, type: 3}
   _ignoreNetworkRules: 0
   spawnPoints:
   - {fileID: 2023724715}
