@@ -51,6 +51,11 @@ namespace Sandbox.DuarteFonseca
         
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         [SerializeField] private float radius = 1.0f;
+
+        private bool isGrounded = false;
+
+        private Collider[] groundColliders;
+        
         
         //TODO:
         // Possibly turn this into a machine state
@@ -70,8 +75,8 @@ namespace Sandbox.DuarteFonseca
             
             Cursor.lockState = CursorLockMode.Locked;
             _playerInput =  new PlayerActions(playerInput);
-            
-            
+
+            groundColliders = new Collider[16];
         }
 
         // Update is called once per frame
@@ -87,8 +92,8 @@ namespace Sandbox.DuarteFonseca
 
         private void FixedUpdate()
         {
-            HandleLevitation();
-            UpdateUprightForce();
+          //  HandleLevitation();
+          //  UpdateUprightForce();
             HandleMove();
             HandleJump();
             HandleGroundCheck();
@@ -99,9 +104,22 @@ namespace Sandbox.DuarteFonseca
 
         public void HandleGroundCheck()
         {
-            Vector3 startPosition = transform.position + groundHeight;
-            Physics.CheckSphere(startPosition, radius: radius);
-           
+            Vector3 startPosition = transform.position + groundHeight; 
+            var size = Physics.OverlapSphereNonAlloc(startPosition, radius: radius, groundColliders);
+
+            isGrounded = (size >= 2);
+
+            // Only iterate up to 'size' to avoid reading stale data or null slots
+            for (int i = 0; i < size; i++)
+            {
+                Debug.Log($"NOME: {groundColliders[i].name} | Colliders detected: {size}");
+            }
+            
+            
+            Debug.Log("Tamanho do buffer: " + groundColliders.Length);
+            Debug.Log("isGrounded: " + isGrounded);
+            // if(!isGrounded)
+            //      _rigidbody.AddForce(Vector3.down * gravity);
 
         }
 
@@ -109,7 +127,10 @@ namespace Sandbox.DuarteFonseca
         private void OnDrawGizmos()
         {
             Vector3 startPosition = transform.position + groundHeight;
+            Gizmos.color = isGrounded ? Color.green : Color.red;
             Gizmos.DrawSphere(startPosition, radius: radius);
+            
+            
         }
 
         public void HandleJump()
@@ -154,7 +175,7 @@ namespace Sandbox.DuarteFonseca
         {
             Vector3 startPosition = transform.position + Vector3.down * 0.5f;
             
-            bool rayDidHit = Physics.Raycast(startPosition, Vector3.down, out RaycastHit hit, 3f);
+            bool rayDidHit = Physics.Raycast(startPosition, Vector3.down, out RaycastHit hit, 6f);
             Debug.DrawRay(startPosition, Vector3.down, Color.red);
 
             if (rayDidHit)
