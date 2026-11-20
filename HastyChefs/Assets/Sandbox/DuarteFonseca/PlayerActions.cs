@@ -15,6 +15,7 @@ public readonly struct PlayerActions
     public readonly InputAction Jump;
     public readonly InputAction Sprint;
     public readonly InputAction Interact;
+    public readonly InputAction Crouch;
 
     public PlayerActions(PlayerInput playerInput)
     {
@@ -26,6 +27,7 @@ public readonly struct PlayerActions
         Jump     = asset.FindAction(map.Jump.id);
         Sprint   = asset.FindAction(map.Sprint.id);
         Interact = asset.FindAction(map.Interact.id);
+        Crouch = asset.FindAction(map.Crouch.id);
     }
     
     
@@ -34,4 +36,8 @@ public readonly struct PlayerActions
     public Vector2 LookVector => Look.ReadValue<Vector2>();
     
     public float JumpVector => Jump.ReadValue<float>();
+    
+    public float CrouchVector => Crouch.ReadValue<float>();
+    public float SprintVector => Sprint.ReadValue<float>();
+    
 }

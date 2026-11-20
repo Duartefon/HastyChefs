@@ -17,17 +17,24 @@ public class ClockDelay
 
     }
 
- 
 
+
+    public float getStopWatchTime()
+    {
+        return CurrentTime-TimeStamp;
+    }
+    
+    
     public bool HasExceededTime()
     {
+        
         return CurrentTime - TimeStamp > WaitTime;
     }
 
     public void UpdateTick(float tick)
     {
         CurrentTime += tick;
-      //  Debug.Log($"Bool: {HasExceededTime()}, boolValue{CurrentTime - TimeStamp}, WaitTime: {WaitTime} , time: {CurrentTime}, timeStamp: {TimeStamp}");
+       // Debug.Log($"Bool: {HasExceededTime()}, boolValue{CurrentTime - TimeStamp}, WaitTime: {WaitTime} , time: {CurrentTime}, timeStamp: {TimeStamp}");
 
     }
 
