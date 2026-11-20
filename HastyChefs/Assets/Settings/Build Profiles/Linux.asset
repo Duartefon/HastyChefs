@@ -23,7 +23,10 @@ MonoBehaviour:
   m_OverrideGlobalSceneList: 1
   m_Scenes:
   - m_enabled: 1
-    m_path: Assets/Sandbox/DuarteFonseca/MainMenu.unity
+    m_path: Assets/Sandbox/DuarteFonseca/GymScene.unity
+    m_guid: 29581a575f03a29478cc831b9f220ae9
+  - m_enabled: 0
+    m_path: Assets/Scenes/MainMenu.unity
     m_guid: 8557648a33cceb1829f1e99fc50d6268
   m_HasScriptingDefines: 0
   m_ScriptingDefines: []
