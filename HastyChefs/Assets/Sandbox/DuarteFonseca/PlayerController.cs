@@ -52,7 +52,7 @@
             [SerializeField] private  float RideSpringStrength = 5f;
             [SerializeField]  private float _uprightJointSpringStrength = 4f; //how strong the string is to pull the character upright 
             [SerializeField]   private float _uprightJointSpringDamper = 4f; //how much impact the string absorbs, aka more bouncy or less bouncy 
-            
+            [SerializeField] private float tumbleTurnSpeed = 8f; // How fast the lying capsule turns toward look direction
             // Start is called once before the first execution of Update after the MonoBehaviour is created
             [SerializeField] private float radius = 1.0f;
             [SerializeField] private AnimationCurve gravityCurve;
@@ -135,7 +135,8 @@
                 HandleCrouch();
                 
                 HandleTumble();
-                
+                UpdateTumbleOrientation();
+
 
 
             }
@@ -157,8 +158,6 @@
                     
 
                     
-                    
-
                 }
 
                 else
@@ -168,7 +167,7 @@
 
 
                 }
-                
+
                 _rigidbody.AddForce(Vector3.down * gravAccel, ForceMode.Acceleration);
               
                 
@@ -178,31 +177,60 @@
 
             public void HandleTumble()
             {
-                if (_isTumbling) return;
+              //  if (_isTumbling) return;
 
                 if (_playerInput.SprintVector > 0 && _playerInput.Jump.WasPressedThisFrame() &&
                     _rigidbody.linearVelocity.magnitude > tumbleVelocityThreshold)
                 {
                     _isTumbling = true;
 
-                    // 1. Get the flat forward direction where Cinemachine is actually looking
+                    // 1. Get flat forward & right directions from where Cinemachine is currently looking
                     Vector3 flatForward = Vector3.ProjectOnPlane(playerCamera.transform.forward, Vector3.up).normalized;
                     if (flatForward.sqrMagnitude < 0.001f)
-                        flatForward = transform.forward;
+                        flatForward = Vector3.forward;
 
-                    // 2. Unfreeze Rigidbody rotation so physics can roll/tumble the capsule
-                   // _rigidbody.constraints = RigidbodyConstraints.None;
+                    Vector3 flatRight = Vector3.Cross(Vector3.up, flatForward).normalized;
 
-                    // 3. Face the look direction and pitch 90° forward onto the belly
-                    Quaternion lookYaw = Quaternion.LookRotation(flatForward, Vector3.up);
-                    Quaternion diveRotation = lookYaw * Quaternion.Euler(90f, 0f, 0f);
+                     
+                    // 3. Tilt 90° forward around flatRight without adding Y-axis twist
+                    Quaternion diveRotation = Quaternion.AngleAxis(90f, flatRight) * Quaternion.identity;
                     _rigidbody.MoveRotation(diveRotation);
-
-                    // 4. Launch forward along that look direction
+                    
+                    // 4. Launch forward along your look direction
                     _rigidbody.AddForce((flatForward + Vector3.up * 0.25f) * tumbleSpeed, ForceMode.Impulse);
                 }
             }
+            private void UpdateTumbleOrientation()
+            {
+                if (!_isTumbling) return;
 
+                Vector3 flatForward = GetFlatLookDirection();
+                Quaternion targetRotation = GetProneRotation(flatForward);
+
+                // Smoothly steer the lying-down capsule to point its head/feet toward where the player looks
+                Quaternion smoothedRotation = Quaternion.Slerp(
+                    _rigidbody.rotation,
+                    targetRotation,
+                    tumbleTurnSpeed * Time.fixedDeltaTime
+                );
+
+                _rigidbody.MoveRotation(smoothedRotation);
+            }
+            
+            
+            private Vector3 GetFlatLookDirection()
+            {
+                Vector3 flatForward = Vector3.ProjectOnPlane(playerCamera.transform.forward, Vector3.up).normalized;
+                return flatForward.sqrMagnitude < 0.001f ? Vector3.forward : flatForward;
+            }
+
+            private Quaternion GetProneRotation(Vector3 flatForward)
+            {
+                // Because the capsule is lying flat:
+                // - Its local Up (+Y, top of head) points forward along flatForward
+                // - Its local Forward (+Z, chest) points straight down into the floor (Vector3.down)
+                return Quaternion.LookRotation(Vector3.down, flatForward);
+            }
             public void HandleCrouch()
             {
                 var cameraPosition = cameraHolder.localPosition;
