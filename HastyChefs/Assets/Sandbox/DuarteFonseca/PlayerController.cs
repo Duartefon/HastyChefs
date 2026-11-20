@@ -50,8 +50,6 @@
             [SerializeField] private  float RideHeight = 2f;
             [SerializeField] private  float RideSpringDamper = 4f;
             [SerializeField] private  float RideSpringStrength = 5f;
-            [SerializeField]  private float _uprightJointSpringStrength = 4f; //how strong the string is to pull the character upright 
-            [SerializeField]   private float _uprightJointSpringDamper = 4f; //how much impact the string absorbs, aka more bouncy or less bouncy 
             [SerializeField] private float tumbleTurnSpeed = 8f; // How fast the lying capsule turns toward look direction
             // Start is called once before the first execution of Update after the MonoBehaviour is created
             [SerializeField] private float radius = 1.0f;

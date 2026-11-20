@@ -26808,9 +26808,7 @@ MonoBehaviour:
   heightOffset: 1.25
   RideHeight: 1.27
   RideSpringDamper: 4.3
-  RideSpringStrength: 15
-  _uprightJointSpringStrength: 13.17
-  _uprightJointSpringDamper: 8
+  RideSpringStrength: 10
   tumbleTurnSpeed: 8
   radius: 0.55
   gravityCurve:
