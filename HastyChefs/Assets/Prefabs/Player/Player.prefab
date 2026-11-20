@@ -333,8 +333,8 @@ GameObject:
   - component: {fileID: 2194640577553093310}
   - component: {fileID: -4890917030953408997}
   - component: {fileID: 3495242379855114057}
-  - component: {fileID: 2149004904201915550}
   - component: {fileID: 7511736135732888629}
+  - component: {fileID: 2149004904201915550}
   - component: {fileID: 126691423310365929}
   - component: {fileID: 208378397848788715}
   m_Layer: 0
@@ -481,7 +481,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
   _invertedPathToNearestParent: 
   _directChildren: []
-  config: {fileID: 11400000, guid: 6b72a61dd9b675043bb750a2eb2091bf, type: 2}
+  config: {fileID: 11400000, guid: 1e00a4cf45a27464498256d557c5e794, type: 2}
   netHealth:
     _value: 100
     _ownerAuth: 0
@@ -511,10 +511,41 @@ MonoBehaviour:
   _parent: {fileID: 0}
   _invertedPathToNearestParent: 
   _directChildren: []
-  config: {fileID: 11400000, guid: 6b72a61dd9b675043bb750a2eb2091bf, type: 2}
+  config: {fileID: 11400000, guid: f2b5abe8061c71b45973e09f75cdf6e2, type: 2}
   netExhausted:
     _value: 0
     _ownerAuth: 1
+    _ownerOnly: 0
+    _sendIntervalInSeconds: 0
+    _initialValue: 0
+--- !u!114 &7511736135732888629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2857672636500861860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bedf3854a6a0ec40ad9e024e4812852, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Player::Downed
+  _networkRules: {fileID: 0}
+  _visitiblityRules: {fileID: 0}
+  _isSetup: 0
+  _prefabId: -2147483648
+  _hasPrefabScope: 0
+  _prefabScope: 0
+  _componentIndex: -2147483648
+  _shouldBePooled: 0
+  _parent: {fileID: 0}
+  _invertedPathToNearestParent: 
+  _directChildren: []
+  health: {fileID: -4890917030953408997}
+  config: {fileID: 11400000, guid: ee01a86e420664f45b51b4217ca0b390, type: 2}
+  netDowned:
+    _value: 0
+    _ownerAuth: 0
     _ownerOnly: 0
     _sendIntervalInSeconds: 0
     _initialValue: 0
@@ -552,37 +583,6 @@ MonoBehaviour:
   interactor: {fileID: 208378397848788715}
   downedLabel: {fileID: 6114839698222315232}
   promptLabel: {fileID: 8108475597906173137}
---- !u!114 &7511736135732888629
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2857672636500861860}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5bedf3854a6a0ec40ad9e024e4812852, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Player::Downed
-  _networkRules: {fileID: 0}
-  _visitiblityRules: {fileID: 0}
-  _isSetup: 0
-  _prefabId: -2147483648
-  _hasPrefabScope: 0
-  _prefabScope: 0
-  _componentIndex: -2147483648
-  _shouldBePooled: 0
-  _parent: {fileID: 0}
-  _invertedPathToNearestParent: 
-  _directChildren: []
-  health: {fileID: 0}
-  config: {fileID: 0}
-  netDowned:
-    _value: 0
-    _ownerAuth: 0
-    _ownerOnly: 0
-    _sendIntervalInSeconds: 0
-    _initialValue: 0
 --- !u!114 &126691423310365929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -898,7 +898,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "YOU ARE DOWN\nWait for a teammate to revive you"
+  m_text: 'YOU ARE DOWN
+
+    Wait for a teammate to revive you'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

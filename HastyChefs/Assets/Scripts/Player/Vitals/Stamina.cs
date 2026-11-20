@@ -5,7 +5,7 @@ using HastyChefs.Player.Core;
 
 public class Stamina : NetworkBehaviour
 {
-    [SerializeField] private PlayerStatsConfig config;
+    [SerializeField] private StaminaConfig config;
     [SerializeField] private SyncVar<bool> netExhausted = new(false, ownerAuth: true);
 
     private StaminaModel model;

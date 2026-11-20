@@ -9,7 +9,7 @@ using UnityEngine.InputSystem;
 public class Downed : NetworkBehaviour, IInteractable
 {
     [SerializeField] private Health health;
-    [SerializeField] private PlayerStatsConfig config;
+    [SerializeField] private DownedConfig config;
     [SerializeField] private SyncVar<bool> netDowned = new(false);
 
     public bool IsDowned => netDowned.value;
@@ -22,7 +22,6 @@ public class Downed : NetworkBehaviour, IInteractable
     private void Awake()
     {
         if (health == null) health = GetComponent<Health>();
-        if (config == null && health != null) config = health.Config;
     }
 
     protected override void OnSpawned()
@@ -62,7 +61,7 @@ public class Downed : NetworkBehaviour, IInteractable
     {
         if (!isServer || !IsDowned) return;
         netDowned.value = false;
-        health.Heal(ReviveRules.RevivedHealth(config.maxHealth, config.reviveHealthFraction));
+        health.Heal(ReviveRules.RevivedHealth(health.Vital.Max, config.reviveHealthFraction));
         Raise(false);
     }
 

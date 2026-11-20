@@ -6,10 +6,9 @@ using HastyChefs.Player.Core;
 
 public class Health : NetworkBehaviour
 {
-    [SerializeField] private PlayerStatsConfig config;
+    [SerializeField] private HealthConfig config;
     [SerializeField] private SyncVar<float> netHealth = new(100f);
     public Vital Vital { get; private set; }
-    public PlayerStatsConfig Config => config;
     public event Action<float, float> Changed;
     public event Action Died;
 

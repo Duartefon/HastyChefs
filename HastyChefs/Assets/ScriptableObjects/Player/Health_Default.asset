@@ -9,12 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef3d3e189cb57ef42bb820ce578bbbd5, type: 3}
-  m_Name: PlayerStatsConfig
-  m_EditorClassIdentifier: Player::PlayerStatsConfig
+  m_Script: {fileID: 11500000, guid: 1d29e84ead6ce83418a9c5544334d6b9, type: 3}
+  m_Name: Health_Default
+  m_EditorClassIdentifier: Player::HealthConfig
   maxHealth: 100
-  maxStamina: 100
-  sprintCostPerSecond: 25
-  regenPerSecond: 20
-  regenDelay: 1
-  exhaustedRecoverAt: 0.2
