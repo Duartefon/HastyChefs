@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: HeadBobSettingsStanding
   m_EditorClassIdentifier: Assembly-CSharp::HeadBobSettings
   _toggleSpeed: 2
-  _stepFrequency: 0.5
+  _stepFrequency: 1
   _returnSpeed: 5
-  _amplitudeMultiplier: 3
+  _amplitudeMultiplier: 1.25
   _verticalCurve:
     serializedVersion: 2
     m_Curve:
@@ -30,13 +30,13 @@ MonoBehaviour:
       outWeight: 0.9032216
     - serializedVersion: 3
       time: 0.25
-      value: 0.060401976
-      inSlope: 0
-      outSlope: 0
+      value: 0.19701448
+      inSlope: 0.08387339
+      outSlope: 0.08387339
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 1
     - serializedVersion: 3
       time: 0.5
       value: -0.09177397
@@ -48,12 +48,12 @@ MonoBehaviour:
       outWeight: 0
     - serializedVersion: 3
       time: 0.75
-      value: 0.060401976
-      inSlope: 0
-      outSlope: 0
+      value: 0.19701448
+      inSlope: -0.0025114457
+      outSlope: -0.0025114457
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.95648956
       outWeight: 0
     - serializedVersion: 3
       time: 1
@@ -73,11 +73,47 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: 0.41314986
+      outSlope: 0.41314986
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.10622499
+      value: 0.04388684
+      inSlope: 0.16145131
+      outSlope: 0.16145131
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.44829747
+      value: 0.013015747
+      inSlope: 0.09128705
+      outSlope: 0.09128705
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.69640714
+    - serializedVersion: 3
+      time: 0.73129594
+      value: -0.020914316
+      inSlope: -0.047948323
+      outSlope: -0.047948323
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0.005765494
+      inSlope: 0.099290684
+      outSlope: 0.099290684
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
